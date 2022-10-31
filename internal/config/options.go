@@ -30,22 +30,23 @@ import (
 type Option func(c *options)
 
 type options struct {
-	autoDetect                     autodetect.AutoDetect
-	version                        version.Version
-	logger                         logr.Logger
-	autoInstrumentationDotNetImage string
-	autoInstrumentationJavaImage   string
-	autoInstrumentationNodeJSImage string
-	autoInstrumentationPythonImage string
-	collectorImage                 string
-	collectorConfigMapEntry        string
-	targetAllocatorConfigMapEntry  string
-	targetAllocatorImage           string
-	onChange                       []func() error
-	labelsFilter                   []string
-	platform                       platform.Platform
-	autoDetectFrequency            time.Duration
-	autoscalingVersion             autodetect.AutoscalingVersion
+	autoDetect                        autodetect.AutoDetect
+	version                           version.Version
+	logger                            logr.Logger
+	autoInstrumentationDotNetImage    string
+	autoInstrumentationJavaImage      string
+	autoInstrumentationNodeJSImage    string
+	autoInstrumentationPythonImage    string
+	autoInstrumentationWebserverImage string
+	collectorImage                    string
+	collectorConfigMapEntry           string
+	targetAllocatorConfigMapEntry     string
+	targetAllocatorImage              string
+	onChange                          []func() error
+	labelsFilter                      []string
+	platform                          platform.Platform
+	autoDetectFrequency               time.Duration
+	autoscalingVersion                autodetect.AutoscalingVersion
 }
 
 func WithAutoDetect(a autodetect.AutoDetect) Option {
@@ -53,11 +54,13 @@ func WithAutoDetect(a autodetect.AutoDetect) Option {
 		o.autoDetect = a
 	}
 }
+
 func WithAutoDetectFrequency(t time.Duration) Option {
 	return func(o *options) {
 		o.autoDetectFrequency = t
 	}
 }
+
 func WithTargetAllocatorImage(s string) Option {
 	return func(o *options) {
 		o.targetAllocatorImage = s
@@ -69,21 +72,25 @@ func WithCollectorImage(s string) Option {
 		o.collectorImage = s
 	}
 }
+
 func WithCollectorConfigMapEntry(s string) Option {
 	return func(o *options) {
 		o.collectorConfigMapEntry = s
 	}
 }
+
 func WithTargetAllocatorConfigMapEntry(s string) Option {
 	return func(o *options) {
 		o.targetAllocatorConfigMapEntry = s
 	}
 }
+
 func WithLogger(logger logr.Logger) Option {
 	return func(o *options) {
 		o.logger = logger
 	}
 }
+
 func WithOnChange(f func() error) Option {
 	return func(o *options) {
 		if o.onChange == nil {
@@ -92,11 +99,13 @@ func WithOnChange(f func() error) Option {
 		o.onChange = append(o.onChange, f)
 	}
 }
+
 func WithPlatform(plt platform.Platform) Option {
 	return func(o *options) {
 		o.platform = plt
 	}
 }
+
 func WithVersion(v version.Version) Option {
 	return func(o *options) {
 		o.version = v
@@ -124,6 +133,18 @@ func WithAutoInstrumentationPythonImage(s string) Option {
 func WithAutoInstrumentationDotNetImage(s string) Option {
 	return func(o *options) {
 		o.autoInstrumentationDotNetImage = s
+	}
+}
+
+func WithAutoInstrumentationApacheImage(s string) Option {
+	return func(o *options) {
+		o.autoInstrumentationWebserverImage = s
+	}
+}
+
+func WithAutoInstrumentationNginxImage(s string) Option {
+	return func(o *options) {
+		o.autoInstrumentationWebserverImage = s
 	}
 }
 

@@ -176,7 +176,7 @@ When using sidecar mode the OpenTelemetry collector container will have the envi
 
 ### OpenTelemetry auto-instrumentation injection
 
-The operator can inject and configure OpenTelemetry auto-instrumentation libraries. Currently DotNet, Java, NodeJS and Python are supported.
+The operator can inject and configure OpenTelemetry auto-instrumentation libraries. Currently DotNet, Java, NodeJS, Python, Apache httpd and Nginx are supported.
 
 To use auto-instrumentation, configure an `Instrumentation` resource with the configuration for the SDK and instrumentation.
 
@@ -223,6 +223,15 @@ instrumentation.opentelemetry.io/inject-python: "true"
 DotNet:
 ```bash
 instrumentation.opentelemetry.io/inject-dotnet: "true"
+```
+Apache:
+```bash
+instrumentation.opentelemetry.io/inject-apache: "true"
+```
+
+Nginx:
+```bash
+instrumentation.opentelemetry.io/inject-nginx: "true"
 ```
 
 OpenTelemetry SDK environment variables only:
@@ -293,6 +302,10 @@ spec:
     image: your-customized-auto-instrumentation-image:python
   dotnet:
     image: your-customized-auto-instrumentation-image:dotnet
+  apache:
+    image: your-customized-auto-instrumentation-image:apache
+  nginx:
+    image: your-customized-auto-instrumentation-image:nginx
 ```
 
 The Dockerfiles for auto-instrumentation can be found in [autoinstrumentation directory](./autoinstrumentation).

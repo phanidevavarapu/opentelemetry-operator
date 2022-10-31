@@ -58,6 +58,10 @@ type InstrumentationSpec struct {
 	// DotNet defines configuration for DotNet auto-instrumentation.
 	// +optional
 	DotNet DotNet `json:"dotnet,omitempty"`
+
+	// Webserver defines configuration for Apache auto-instrumentation.
+	// +optional
+	Webserver Webserver `json:"nginx,omitempty"`
 }
 
 // Resource defines the configuration for the resource attributes, as defined by the OpenTelemetry specification.
@@ -143,6 +147,27 @@ type DotNet struct {
 	// If the former var had been defined, then the other vars would be ignored.
 	// +optional
 	Env []corev1.EnvVar `json:"env,omitempty"`
+}
+
+type Webserver struct {
+	// Image is a container image with Webex SDK and auto-instrumentation.
+	// +optional
+	Image string `json:"image,omitempty"`
+
+	// Env defines Nginx specific env vars. There are four layers for env vars' definitions and
+	// the precedence order is: `original container env vars` > `language specific env vars` > `common env vars` > `instrument spec configs' vars`.
+	// If the former var had been defined, then the other vars would be ignored.
+	// +optional
+	Env []corev1.EnvVar `json:"env,omitempty"`
+
+	// Attrs defines Nginx agent specific attributes. The precedence is:
+	// `agent default attributes` > `instrument spec attributes`
+	// +optional
+	Attrs []corev1.EnvVar `json:"attrs,omitempty"`
+
+	// Nginx server version. One of >= 1.18. Default is 1.18
+	// +optional
+	Version string `json:"version,omitempty"`
 }
 
 // InstrumentationStatus defines status of the instrumentation.
