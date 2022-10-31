@@ -29,6 +29,8 @@ var (
 	autoInstrumentationNodeJS string
 	autoInstrumentationPython string
 	autoInstrumentationDotNet string
+	autoInstrumentationApache string
+	autoInstrumentationNginx  string
 )
 
 // Version holds this Operator's version as well as the version of some of the components it uses.
@@ -42,6 +44,8 @@ type Version struct {
 	AutoInstrumentationNodeJS string `json:"auto-instrumentation-nodejs"`
 	AutoInstrumentationPython string `json:"auto-instrumentation-python"`
 	AutoInstrumentationDotNet string `json:"auto-instrumentation-dotnet"`
+	AutoInstrumentationApache string `json:"auto-instrumentation-apache"`
+	AutoInstrumentationNginx  string `json:"auto-instrumentation-nginx"`
 }
 
 // Get returns the Version object with the relevant information.
@@ -56,12 +60,14 @@ func Get() Version {
 		AutoInstrumentationNodeJS: AutoInstrumentationNodeJS(),
 		AutoInstrumentationPython: AutoInstrumentationPython(),
 		AutoInstrumentationDotNet: AutoInstrumentationDotNet(),
+		AutoInstrumentationApache: AutoInstrumentationApache(),
+		AutoInstrumentationNginx:  AutoInstrumentationNginx(),
 	}
 }
 
 func (v Version) String() string {
 	return fmt.Sprintf(
-		"Version(Operator='%v', BuildDate='%v', OpenTelemetryCollector='%v', Go='%v', TargetAllocator='%v', AutoInstrumentationJava='%v', AutoInstrumentationNodeJS='%v', AutoInstrumentationPython='%v', AutoInstrumentationDotNet='%v')",
+		"Version(Operator='%v', BuildDate='%v', OpenTelemetryCollector='%v', Go='%v', TargetAllocator='%v', AutoInstrumentationJava='%v', AutoInstrumentationNodeJS='%v', AutoInstrumentationPython='%v', AutoInstrumentationDotNet='%v', AutoInstrumentationWebserver='%v', AutoInstrumentationNginx='%v')",
 		v.Operator,
 		v.BuildDate,
 		v.OpenTelemetryCollector,
@@ -71,6 +77,8 @@ func (v Version) String() string {
 		v.AutoInstrumentationNodeJS,
 		v.AutoInstrumentationPython,
 		v.AutoInstrumentationDotNet,
+		v.AutoInstrumentationApache,
+		v.AutoInstrumentationNginx,
 	)
 }
 
@@ -120,6 +128,20 @@ func AutoInstrumentationPython() string {
 func AutoInstrumentationDotNet() string {
 	if len(autoInstrumentationDotNet) > 0 {
 		return autoInstrumentationDotNet
+	}
+	return "0.0.0"
+}
+
+func AutoInstrumentationApache() string {
+	if len(autoInstrumentationApache) > 0 {
+		return autoInstrumentationApache
+	}
+	return "0.0.0"
+}
+
+func AutoInstrumentationNginx() string {
+	if len(autoInstrumentationNginx) > 0 {
+		return autoInstrumentationNginx
 	}
 	return "0.0.0"
 }

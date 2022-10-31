@@ -45,6 +45,8 @@ type Config struct {
 	targetAllocatorConfigMapEntry  string
 	autoInstrumentationNodeJSImage string
 	autoInstrumentationJavaImage   string
+	autoInstrumentationApacheImage string
+	autoInstrumentationNginxImage  string
 	onChange                       []func() error
 	labelsFilter                   []string
 	platform                       platform.Platform
@@ -193,6 +195,16 @@ func (c *Config) AutoInstrumentationPythonImage() string {
 // AutoInstrumentationDotNetImage returns OpenTelemetry DotNet auto-instrumentation container image.
 func (c *Config) AutoInstrumentationDotNetImage() string {
 	return c.autoInstrumentationDotNetImage
+}
+
+// AutoInstrumentationApacheImage returns OpenTelemetry Nginx auto-instrumentation container image.
+func (c *Config) AutoInstrumentationApacheImage() string {
+	return c.autoInstrumentationApacheImage
+}
+
+// AutoInstrumentationNginxImage returns OpenTelemetry Nginx auto-instrumentation container image.
+func (c *Config) AutoInstrumentationNginxImage() string {
+	return c.autoInstrumentationNginxImage
 }
 
 // Returns the filters converted to regex strings used to filter out unwanted labels from propagations.
